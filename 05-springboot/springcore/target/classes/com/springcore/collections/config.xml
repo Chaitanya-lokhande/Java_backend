@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	https://www.springframework.org/schema/context/spring-context.xsd">
+	
+	
+	<!--This is setter injection method--> 
+	<bean class="com.springcore.collections.Employees" name="emp1">
+		<property name="empName" value="Chaitanya" />
+		<property name="empMob">
+			<list>
+				<value>78972314879</value>
+				<value>82374987234</value>
+				<value>98802391482</value>
+				<null/>
+			</list>
+		</property>
+		<property name="empAdd">
+			<set>
+				<value>Chandigarh</value>
+				<value>Delhi</value>
+				<value>Pune</value>
+			</set>
+		</property>
+		<property name="empCourses">
+			<map>
+				<entry key="java" value="2months" />
+				<entry key="python" value="4months" />
+			</map>
+		</property>
+		
+	</bean>	
+	</beans>
