@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	https://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/util
+	https://www.springframework.org/schema/util/spring-util.xsd">
+	
+	<util:list list-class="java.util.LinkedList" id="friendsList">
+	<value>Aman</value>
+	<value>Raman</value>
+	<value>Ribin</value>
+	<value>Rahul</value>
+	</util:list>
+	
+	<util:map map-class="java.util.HashMap" id="structure">
+	<entry key="firstYear" value="21223" />
+	<entry key="secondYear" value="98723" />
+	<entry key="thirdYear" value="9213" />
+	</util:map>
+	
+	<bean class="com.springcore.standalone.collections.Person" name="person1">
+	<property name="friends" ref="friendsList"/>
+	<property name="structure" ref="structure" />
+	</bean>
+	
+	</beans>
