@@ -1,0 +1,43 @@
+package com.springcore.springjdbc;
+
+import java.util.Scanner;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.springcore.springjdbc.dao.StudentDaoImple;
+import com.springcore.springjdbc.entities.Student;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    public static void main( String[] args )
+    {
+        ApplicationContext context = new ClassPathXmlApplicationContext("com/springcore/springjdbc/config.xml");
+        
+        StudentDaoImple studentDaoImple = context.getBean("studentDaoImple", StudentDaoImple.class);
+        
+        Student student = new Student();
+        student.setId(333);
+        student.setName("Ashu Gore");
+        student.setCity("Kangar");
+        
+        //int result = studentDaoImple.insert(student);
+        
+        //System.out.println("number of record inserted -> " + result);
+        
+        //int updateRes = studentDaoImple.change(student);
+       // System.out.println("number of record updated -> " + updateRes);
+        
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Enter Id of student to delete : ");
+        int inputId = sc.nextInt();
+        int deleteRes = studentDaoImple.delete(inputId);
+        System.out.println("number of entries deleted -> " + deleteRes);
+        
+    }
+}
