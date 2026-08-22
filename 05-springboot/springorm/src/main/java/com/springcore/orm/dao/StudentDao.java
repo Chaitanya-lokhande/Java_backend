@@ -44,7 +44,7 @@ public class StudentDao {
 	
 	public void updateStudent(Student student) {
 		Session session = this.sessionFactory.getCurrentSession();
-		session.merge(session);
+		session.merge(student);
 	}
 	
 	public SessionFactory getSessionFactory() {
