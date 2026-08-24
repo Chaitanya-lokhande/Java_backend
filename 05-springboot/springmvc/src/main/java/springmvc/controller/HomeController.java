@@ -30,7 +30,5 @@ public class HomeController {
 		
 		return modelAndView;
 	}
-	
-	public String 
 
 }
