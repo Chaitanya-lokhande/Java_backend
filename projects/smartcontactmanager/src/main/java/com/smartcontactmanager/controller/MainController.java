@@ -1,6 +1,7 @@
 package com.smartcontactmanager.controller;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,10 +20,13 @@ import jakarta.validation.Valid;
 @Controller
 public class MainController {
 	
+	private final BCryptPasswordEncoder passwordEncoder;
+	
 	private final UserRepository userRepository;
 
-	MainController(UserRepository userRepository) {
+	MainController(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	@GetMapping("/")
@@ -56,6 +60,7 @@ public class MainController {
 			user.setRole("ROLE_USER");
 			user.setEnabled(true);
 			user.setImageUrl("default.png");
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			
 			User resultUser = this.userRepository.save(user);
 			System.out.println(resultUser);
@@ -73,10 +78,14 @@ public class MainController {
 			model.addAttribute("user", user);
 			session.setAttribute("message", new Message(e.getMessage(), "alert-danger"));
 			return "signup";
-			
 		}
 		
-		
 		return "signup";
+	}
+	
+	@GetMapping("/login")
+	public String loginPageHandler(Model model) {
+		model.addAttribute("title", "Login - Smart Contact Manager");
+		return "login";
 	}
 }

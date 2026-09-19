@@ -29,10 +29,6 @@ public class User {
 	@Column(unique = true)
 	private String email;
 	
-	@Pattern(
-	        regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
-	        message = "Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a number, and a special character."
-	    )
 	private String password;
 	
 	private String role;
