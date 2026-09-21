@@ -13,31 +13,18 @@ public class ContactInfo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int contactId;
-	private String contactName;
-	private String contactEmail;
-	private String contactNickName;
-	private String contactWork;
-	private String contactMobileNumber;
-	private String contactImage;
+	private String firstName;
+	private String lastEmail;
+	private String nickName;
+	private String work;
+	private String mobileNumber;
+	private String profileImage;
 	
 	@Column(length = 5000)
-	private String contactDescription;
+	private String description;
 	
 	@ManyToOne()
 	private User user;
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public ContactInfo() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
 	public int getContactId() {
 		return contactId;
@@ -47,61 +34,82 @@ public class ContactInfo {
 		this.contactId = contactId;
 	}
 
-	public String getContactName() {
-		return contactName;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setContactName(String contactName) {
-		this.contactName = contactName;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String getContactEmail() {
-		return contactEmail;
+	public String getLastEmail() {
+		return lastEmail;
 	}
 
-	public void setContactEmail(String contactEmail) {
-		this.contactEmail = contactEmail;
+	public void setLastEmail(String lastEmail) {
+		this.lastEmail = lastEmail;
 	}
 
-	public String getContactNickName() {
-		return contactNickName;
+	public String getNickName() {
+		return nickName;
 	}
 
-	public void setContactNickName(String contactNickName) {
-		this.contactNickName = contactNickName;
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
-	public String getContactWork() {
-		return contactWork;
+	public String getWork() {
+		return work;
 	}
 
-	public void setContactWork(String contactWork) {
-		this.contactWork = contactWork;
+	public void setWork(String work) {
+		this.work = work;
 	}
 
-	public String getContactMobileNumber() {
-		return contactMobileNumber;
+	public String getMobileNumber() {
+		return mobileNumber;
 	}
 
-	public void setContactMobileNumber(String contactMobileNumber) {
-		this.contactMobileNumber = contactMobileNumber;
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
 	}
 
-	public String getContactImage() {
-		return contactImage;
+	public String getProfileImage() {
+		return profileImage;
 	}
 
-	public void setContactImage(String contactImage) {
-		this.contactImage = contactImage;
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
 	}
 
-	public String getContactDescription() {
-		return contactDescription;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setContactDescription(String contactDescription) {
-		this.contactDescription = contactDescription;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	@Override
+	public String toString() {
+		return "ContactInfo [contactId=" + contactId + ", firstName=" + firstName + ", lastEmail=" + lastEmail
+				+ ", nickName=" + nickName + ", work=" + work + ", mobileNumber=" + mobileNumber + ", profileImage="
+				+ profileImage + ", description=" + description + ", user=" + user + "]";
+	}
+
+	public ContactInfo() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	
 }
 
