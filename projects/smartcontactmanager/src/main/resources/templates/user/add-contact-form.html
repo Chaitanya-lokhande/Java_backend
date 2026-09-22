@@ -1,66 +1,128 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{user/base::Layout(~{::section})}">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{user/base::Layout(~{::section})}">
+
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
 </head>
+
 <body>
 	<section>
 		<div class="container">
 			<div class="card mt-3">
 				<h2 class="text-center mt-2">Add Contact Details</h2>
+				<div th:if="${session.message}" class="text-center mx-3 alert" th:classappend="${session.message.type}"
+					role="alert">
 
-				<form class="mx-4 mt-4 mb-2">
+					<p th:text="${session.message.content}">
+
+						<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+				</div>
+
+				<form class="needs-validation mx-4 mt-4 mb-2" th:action="@{/user/do-add-contact}" method="post"
+					th:object="${contactInfo}" novalidate>
 					<div class="form-row">
 						<div class="form-group col-md-6">
-							<label for="inputEmail4">Email</label> <input type="email"
-								class="form-control" id="inputEmail4" placeholder="Email">
+							<label for="firstName">First Name</label> <input name="firstName" type="text"
+								class="form-control" id="firstName" placeholder="First Name" th:value="${contactInfo.firstName}" 
+								th:classappend="${#fields.hasErrors('firstName')?'is-invalid':''}" required>
+							<div class="invalid-feedback" th:each="e:${#fields.errors('firstName')}" th:text="${e}">
+							</div>
 						</div>
 						<div class="form-group col-md-6">
-							<label for="inputPassword4">Password</label> <input
-								type="password" class="form-control" id="inputPassword4"
-								placeholder="Password">
+							<label for="lastName">Last Name</label> <input name="lastName" type="text"
+								class="form-control" id="lastName" placeholder="Last Name" th:value="${contactInfo.lastName}" 
+								th:classappend="${#fields.hasErrors('lastName')?'is-invalid':''}" required>
+							<div class="invalid-feedback" th:each="e:${#fields.errors('lastName')}" th:text="${e}">
+							</div>
 						</div>
-					</div>
-					<div class="form-group">
-						<label for="inputAddress">Address</label> <input type="text"
-							class="form-control" id="inputAddress" placeholder="1234 Main St">
-					</div>
-					<div class="form-group">
-						<label for="inputAddress2">Address 2</label> <input type="text"
-							class="form-control" id="inputAddress2"
-							placeholder="Apartment, studio, or floor">
 					</div>
 					<div class="form-row">
-						<div class="form-group col-md-6">
-							<label for="inputCity">City</label> <input type="text"
-								class="form-control" id="inputCity">
+						<div class="form-group col-md-3">
+							<label for="mobileNumber">Mobile Number</label> <input name="mobileNumber" type="number"
+								class="form-control no-arrows" id="mobileNumber" placeholder="Mobile Number" th:value="${contactInfo.mobileNumber}" 
+								th:classappend="${#fields.hasErrors('mobileNumber')?'is-invalid':''}" required>
+							<div class="invalid-feedback" th:each="e:${#fields.errors('mobileNumber')}" th:text="${e}">
+							</div>
+
+						</div>
+						<div class="form-group col-md-5">
+							<label for="email">Email</label> <input name="email" type="email" class="form-control"
+								id="email" placeholder="Email" th:value="${contactInfo.email}" 
+								th:classappend="${#fields.hasErrors('email')?'is-invalid':''}" required>
+							<div class="invalid-feedback" th:each="e:${#fields.errors('email')}" th:text="${e}">
+							</div>
 						</div>
 						<div class="form-group col-md-4">
-							<label for="inputState">State</label> <select id="inputState"
-								class="form-control">
-								<option selected>Choose...</option>
-								<option>...</option>
-							</select>
-						</div>
-						<div class="form-group col-md-2">
-							<label for="inputZip">Zip</label> <input type="text"
-								class="form-control" id="inputZip">
+							<label for="work">Work</label> <input name="work" type="text" class="form-control" id="work"
+								placeholder="Work" th:value="${contactInfo.work}" th:classappend="${#fields.hasErrors('work')?'is-invalid':''}" required>
+							<div class="invalid-feedback" th:each="e:${#fields.errors('work')}" th:text="${e}">
+							</div>
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" id="gridCheck">
-							<label class="form-check-label" for="gridCheck"> Check me
-								out </label>
+						<label for="inputAddress">Address Line 1</label> <input type="text" class="form-control"
+							id="inputAddress" placeholder="House no./Building Name/Floor"
+							th:field="*{contactAddress.addressLine1}" th:value="${contactInfo.contactAddress.addressLine1}" 
+							th:classappend="${#fields.hasErrors('contactAddress.addressLine1')?'is-invalid':''}" required>
+							<div class="invalid-feedback" th:each="e:${#fields.errors('contactAddress.addressLine1')}" th:text="${e}">
+							</div>
+					</div>
+					<div class="form-group">
+						<label for="inputAddress2">Address Line 2</label> <input type="text" class="form-control"
+							id="inputAddress2" placeholder="Area/Street/Locality"
+							th:field="*{contactAddress.addressLine2}" th:value="${contactInfo.contactAddress.addressLine2}" 
+							th:classappend="${#fields.hasErrors('contactAddress.addressLine2')?'is-invalid':''}" required>
+							<div class="invalid-feedback" th:each="e:${#fields.errors('contactAddress.addressLine2')}" th:text="${e}">
+							</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="inputCity">City</label> <input type="text" class="form-control" id="inputCity"
+								th:field="*{contactAddress.city}" th:value="${contactInfo.contactAddress.city}" 
+								th:classappend="${#fields.hasErrors('contactAddress.city')?'is-invalid':''}" required>
+								<div class="invalid-feedback" th:each="e:${#fields.errors('contactAddress.city')}" th:text="${e}">
+							</div>
+						</div>
+						<div class="form-group col-md-4">
+							<label for="inputState">State</label> <select id="inputState" class="form-control"
+								th:field="*{contactAddress.state}" th:value="${contactInfo.contactAddress.state}" th:classappend="${#fields.hasErrors('contactAddress.state')?'is-invalid':''}">
+								<option value="" selected disabled>--Select State--</option>
+								<option th:each="state : ${stateList}" th:value="${state}" th:text="${state}">
+									State Name</option>
+							</select>
+							<div class="invalid-feedback" th:each="e:${#fields.errors('contactAddress.state')}" th:text="${e}">
+							</div>
+						</div>
+						<div class="form-group col-md-2">
+							<label for="inputZip">Zip</label> <input type="number" class="form-control no-arrows"
+								id="inputZip" th:field="*{contactAddress.zipcode}" th:value="${contactInfo.contactAddress.zipcode}" 
+								th:classappend="${#fields.hasErrors('contactAddress.zipcode')?'is-invalid':''}" required>
+								<div class="invalid-feedback" th:each="e:${#fields.errors('contactAddress.zipcode')}" th:text="${e}">
+							</div>
 						</div>
 					</div>
-					<button type="submit" class="btn btn-primary">Sign in</button>
-				</form>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="profileImage">Upload Contact Photo</label> <input name="profileImage"
+								type="file" class="form-control" id="profileImage" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<textarea name="description" th:text="${contactInfo.description}"
+							placeholder="Tell something about your contact" rows="8" class="form-control" th:classappend="${#fields.hasErrors('description')?'is-invalid':''}"></textarea>
+						
+							<div class="invalid-feedback" th:each="e:${#fields.errors('description')}" th:text="${e}">
+							</div>
+
+					</div>
+					<button type="submit" class="btn bg-primary text-white mt-4">Create New Contact</button>
 			</div>
+			</form>
+		</div>
 		</div>
 
 	</section>
 </body>
+
 </html>
