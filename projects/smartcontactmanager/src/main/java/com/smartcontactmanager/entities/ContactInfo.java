@@ -38,7 +38,6 @@ public class ContactInfo {
 	@Valid 
 	private ContactAddress contactAddress;
 	
-	@NotBlank(message = "Please upload profile photo") 
 	private String profileImage;
 	
 	@NotBlank 

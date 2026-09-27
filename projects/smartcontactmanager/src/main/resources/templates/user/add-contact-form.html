@@ -20,7 +20,7 @@
 				</div>
 
 				<form class="needs-validation mx-4 mt-4 mb-2" th:action="@{/user/do-add-contact}" method="post"
-					th:object="${contactInfo}" novalidate>
+					th:object="${contactInfo}" novalidate enctype="multipart/form-data">
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<label for="firstName">First Name</label> <input name="firstName" type="text"
@@ -104,8 +104,8 @@
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-6">
-							<label for="profileImage">Upload Contact Photo</label> <input name="profileImage"
-								type="file" class="form-control" id="profileImage" required>
+							<label for="contactImage">Upload Contact Photo</label> <input name="contactImage"
+								type="file" class="form-control" id="contactImage" required>
 						</div>
 					</div>
 					<div class="form-group">

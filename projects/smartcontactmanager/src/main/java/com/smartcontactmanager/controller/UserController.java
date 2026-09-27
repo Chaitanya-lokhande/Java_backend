@@ -1,9 +1,14 @@
 package com.smartcontactmanager.controller;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,7 +17,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.smartcontactmanager.dao.ContactRepository;
 import com.smartcontactmanager.dao.UserRepository;
 import com.smartcontactmanager.entities.ContactAddress;
 import com.smartcontactmanager.entities.ContactInfo;
@@ -28,6 +35,9 @@ public class UserController {
 
 	@Autowired
 	UserRepository userRepository;
+
+	@Autowired 
+	ContactRepository contactRepository;
 
 	List<String> stateList = List.of("Maharashtra", "California", "Texas", "New York", "Delhi");
 
@@ -58,10 +68,15 @@ public class UserController {
 	}
 
 	@PostMapping ("/do-add-contact")
-	public String doAddContactHandler(@Valid @ModelAttribute("contactInfo") ContactInfo contactInfo, BindingResult validationResult, @RequestParam (value = "profileImage") String profileImage, Principal principal, HttpSession session, Model model){
+	public String doAddContactHandler(@Valid @ModelAttribute("contactInfo") ContactInfo contactInfo, BindingResult validationResult, @RequestParam (value = "contactImage") MultipartFile file, Principal principal, HttpSession session, Model model){
 		try{
-			if(profileImage==null){
+			if(file.isEmpty()){
 				contactInfo.setProfileImage("default.png");
+			}
+			else{
+				contactInfo.setProfileImage(file.getOriginalFilename());
+				File saveLocation = new ClassPathResource("static/image").getFile();
+				Files.copy(file.getInputStream(), Paths.get(saveLocation.getAbsolutePath()+ File.separator + file.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
 			}
 			if(validationResult.hasErrors()){
 				System.out.println("ERROR: " + validationResult.toString());
@@ -87,5 +102,20 @@ public class UserController {
 
 		return "user/add-contact-form";
 	}
+
+
+
+	@GetMapping("/show-contacts")
+	public String showContactsHandler(Model model, Principal principal) {
+		String userName = principal.getName();
+		User user = this.userRepository.getUserByUserName(userName);
+
+		List<ContactInfo> userContacts = this.contactRepository.findContactsByUser(user.getId());
+		
+		model.addAttribute("userContacts", userContacts);
+
+		return "user/show_contacts";
+	}
+	
 
 }
